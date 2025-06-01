@@ -73,6 +73,18 @@ func openInEditor(editor, path string) {
 	}
 }
 
+func openFile(modifier, path string) {
+	// Generic, takes any command as arg, for example <cat, nvim, glow>
+	cmd := exec.Command(modifier, path)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("Failed to open previewer:", err)
+	}
+}
+
 func findLastNote(dir string) (string, error) {
 	var lastModTime time.Time
 	var lastFile string

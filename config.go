@@ -7,9 +7,10 @@ import (
 )
 
 type Config struct {
-	NotesDir string `yaml:"notes_dir"`
-	Savemode string `yaml:"savemode"` // "timestamp" or "daily"
-	Editor   string `yaml:"editor"`
+	NotesDir  string `yaml:"notes_dir"`
+	Savemode  string `yaml:"savemode"` // "timestamp" or "daily"
+	Editor    string `yaml:"editor"`
+	Previewer string `yaml:"previewer"`
 }
 
 func LoadConfig(path string) (*Config, error) {
