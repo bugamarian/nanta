@@ -1,7 +1,1 @@
-*
-!.gitignore
-!*.go
-!*.mod
-!*.md
-!nanta
-!install.sh
+go.sum
