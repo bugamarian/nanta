@@ -12,7 +12,7 @@ TEMPLATE_DIR="$CONFIG_DIR/templates"
 echo "🔧 Installing $APP_NAME..."
 
 mkdir -p "$INSTALL_DIR"
-cp "./$APP_NAME" "$INSTALL_DIR/"
+cp "./bin/$APP_NAME" "$INSTALL_DIR/"
 chmod +x "$INSTALL_DIR/$APP_NAME"
 
 mkdir -p "$CONFIG_DIR"
@@ -20,7 +20,8 @@ if [ ! -f "$CONFIG_FILE" ]; then
     cat <<EOF > "$CONFIG_FILE"
 notes_dir: "$NOTES_DIR"
 savemode: "daily"
-editor: "nvim"
+template: "$TEMPLATE_DIR/default.tmpl"
+modifier: "nvim"
 previewer: "glow"
 EOF
     echo "✅ Created config at $CONFIG_FILE"
@@ -29,7 +30,7 @@ fi
 mkdir -p "$NOTES_DIR"
 
 mkdir -p "$TEMPLATE_DIR"
-cp -n ./templates/*.md "$TEMPLATE_DIR/"
+cp -n ./templates/*.tmpl "$TEMPLATE_DIR/"
 echo "✅ Copied templates to $TEMPLATE_DIR"
 
 echo "🎉 $APP_NAME installed successfully to $INSTALL_DIR"
