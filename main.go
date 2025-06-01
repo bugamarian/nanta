@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -10,11 +11,6 @@ func main() {
 	title := flag.String("title", "", "Note title")
 	templatePath := flag.String("template", "", "Path to template")
 	openLast := flag.Bool("last", false, "Open last note")
-	notInEditor := flag.Bool(
-		"no-editor",
-		false,
-		"Wether or not to open the editor",
-	)
 	configPath := flag.String("config", "", "Home directory")
 	preview := flag.Bool(
 		"preview",
@@ -23,16 +19,15 @@ func main() {
 	)
 	flag.Parse()
 
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Println("Could not find home directory")
-		return
-	}
 	configFile := *configPath
 	if *configPath == "" {
-		xdgDir := ".config/nanta"
+		xdgDir, err := os.UserConfigDir()
+		if err != nil {
+			log.Fatalf("Could not find config dir")
+		}
+		configAppName := "nanta"
 		configName := "config.yaml"
-		configFile = fmt.Sprintf("%s/%s/%s", homeDir, xdgDir, configName)
+		configFile = fmt.Sprintf("%s/%s/%s", xdgDir, configAppName, configName)
 
 	}
 	cfg, err := LoadConfig(configFile)
@@ -60,7 +55,7 @@ func main() {
 		fmt.Println("Error creating note:", err)
 		os.Exit(1)
 	}
-	if !*notInEditor && !*preview {
-		openInEditor(cfg.Editor, path)
+	if !*preview {
+		openFile(cfg.Editor, path)
 	}
 }

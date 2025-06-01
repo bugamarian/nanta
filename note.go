@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func createNote(cfg *Config, title, templatePath string) (string, error) {
+func createNote(cfg *Config, title, templateName string) (string, error) {
 	ts := time.Now()
 	var filename string
 	if cfg.Savemode == "daily" {
@@ -21,22 +21,31 @@ func createNote(cfg *Config, title, templatePath string) (string, error) {
 
 	path := filepath.Join(cfg.NotesDir, filename)
 	var content string
-
-	if templatePath != "" {
-		tmpl, err := os.ReadFile(templatePath)
-		if err != nil {
-			return "", err
-		}
-		content = string(tmpl)
-		content = strings.ReplaceAll(
-			content,
-			"{{.Timestamp}}",
-			ts.Format("2006-01-02 15:04"),
-		)
-		content = strings.ReplaceAll(content, "{{.Title}}", title)
-	} else {
-		content = fmt.Sprintf("# %s\n\n", titleOrTimestamp(title, ts))
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		return "", err
 	}
+	if templateName == "" {
+		templateName = "default.md"
+	}
+	templatePath := filepath.Join(
+		configDir,
+		"nanta",
+		"templates",
+		templateName,
+	)
+	tmpl, err := os.ReadFile(templatePath)
+	if err != nil {
+		return "", err
+	}
+
+	content = string(tmpl)
+	content = strings.ReplaceAll(
+		content,
+		"{{.Timestamp}}",
+		ts.Format("2006-01-02 15:04"),
+	)
+	content = strings.ReplaceAll(content, "{{.Title}}", title)
 
 	if cfg.Savemode == "daily" && fileExists(path) {
 		f, _ := os.OpenFile(path, os.O_APPEND|os.O_WRONLY, 0644)
@@ -62,17 +71,6 @@ func fileExists(path string) bool {
 	return err == nil
 }
 
-func openInEditor(editor, path string) {
-	cmd := exec.Command(editor, path)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err != nil {
-		fmt.Println("Failed to open editor:", err)
-	}
-}
-
 func openFile(modifier, path string) {
 	// Generic, takes any command as arg, for example <cat, nvim, glow>
 	cmd := exec.Command(modifier, path)
@@ -81,7 +79,7 @@ func openFile(modifier, path string) {
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println("Failed to open previewer:", err)
+		fmt.Println("Failed to open:", err)
 	}
 }
 
