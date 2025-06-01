@@ -1,0 +1,5 @@
+#notes_dir: "/home/marian/notes"
+notes_dir: "./notes"
+#savemode: "timestamp"  # or "daily"
+savemode: "daily"  # or "daily"
+editor: "nvim" # or any other editor
