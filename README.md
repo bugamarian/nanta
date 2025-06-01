@@ -16,16 +16,16 @@ note --preview # Works only if --last is provided, will print the path to the fi
 Here are some suggestions that I have in mind, will make the experience better. It's also easier to remember if you think of them this way:
 
 
-`lkn` -> last known note # Using `lkn` because `ln` is reserverd
-`lnp`-> last note preview
-`nn` -> new note
+- `lkn` -> last known note # Using `lkn` because `ln` is reserverd
+- `lnp`-> last note preview
+- `nn` -> new note
 
 
 
 ```bash
-alias ln="note --last"
-alias lnp="note --last --preview"
-alias nn="note --title"
+alias ln="nanta --last"
+alias lnp="nanta --last --preview"
+alias nn="nanta --title"
 ```
 
 ### Configuration
