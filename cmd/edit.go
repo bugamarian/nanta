@@ -18,7 +18,7 @@ var editCmd = &cobra.Command{
 		modifier := viper.GetString("modifier")
 		path, err := edit.FindLastNote(notesDir)
 		if err != nil {
-			log.Fatalf("Error while trying to edit lates document: %s", err)
+			log.Fatalf("Error while trying to edit latest document: %s", err)
 		}
 		common.OpenFile(modifier, path)
 	},
