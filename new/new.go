@@ -56,7 +56,7 @@ func CreateNote() {
 
 	err = tmpl.Execute(noteFile, data)
 	if err != nil {
-		log.Fatalf("Failer to render note: %s", err)
+		log.Fatalf("Failed to render note: %s", err)
 	}
 
 	common.OpenFile(modifier, notePath)
