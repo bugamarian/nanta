@@ -27,7 +27,8 @@ alias nn="nanta new --title"
 The configuration is quite simple, it only contains 3 parameters. This is the default configuration that I use:
 
 ```yaml
-notes_dir: "/home/<user>/notes" # Change <user> with your username (or output of echo $USER)
+# Change <user> with your username (or output of echo $USER)
+notes_dir: "/home/<user>/notes" 
 modifier: "nvim" # I use neovim, but tbf you can put anything here, like <code> for vscode
 template: "/home/<user>/.config/nanta/templates/default.tmpl"
 ```
