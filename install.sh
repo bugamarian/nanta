@@ -21,7 +21,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 notes_dir: "$NOTES_DIR"
 savemode: "daily"
 template: "$TEMPLATE_DIR/default.tmpl"
-modifier: "nvim"
+modifier: "vim"
 EOF
     echo "✅ Created config at $CONFIG_FILE"
 fi
